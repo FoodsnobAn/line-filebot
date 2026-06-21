@@ -15,19 +15,19 @@ from datetime import datetime
 app = Flask(__name__)
 
 # LINE 設定
-CHANNEL_ACCESS_TOKEN = os.getenv("5tCfHxAY7J3dV02gSh+j1YWcEfgSd1lMgWyCv4fMOKjPHUuDOPoe0i144rLIs/W26qN5DDrrUsRMZt1KhGJpAo717OyviTaSL3Su0VjSFpIXOuuh+IpEGKt9MyH3KBsdXsziIk8i0cuo8H3/xPCkwQdB04t89/1O/w1cDnyilFU=")
-CHANNEL_SECRET = os.getenv("ad697b630938b1608c65257b56981a4d")
+CHANNEL_ACCESS_TOKEN = os.getenv("CHANNEL_ACCESS_TOKEN")
+CHANNEL_SECRET = os.getenv("CHANNEL_SECRET")
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
 
 # Discord Webhook 設定
 DISCORD_WEBHOOKS = {
-    "圖片儲存": os.getenv("https://discord.com/api/webhooks/1518157142924988436/shTPu035lQForGJ1miyiKj9kSZoiU85V4Q-cy3Vd8GKaGIVRQKwfFBbfbq4gUhbs3Ngm"),
-    "連結總匯": os.getenv("https://discord.com/api/webhooks/1518157438874947685/RzR7rsBgiXec3zxJqAfGCLOYmfnNe2I0qMSi8oPQk58hKjWRqXQ27nAQxFfnt03jJRxK"),
-    "程式碼": os.getenv("https://discord.com/api/webhooks/1518157716374159400/kTqEU9gvvk7lmmG5KtWzbd-ivVKKP_U3lTSLm0UxDj5jI6Uqgn2Qqq5fn6LW-iqWbq55"),
-    "影音": os.getenv("https://discord.com/api/webhooks/1518157809752215685/sIX6p9lEZ6h91Y4ousZVGSG3LLwA-RDwWx4I3Qk2MJQHF6mxoSgHcBdGA4hlMiDRDRXc"),
-    "學習筆記": os.getenv("https://discord.com/api/webhooks/1518157928656404530/HcIi7Ko12H7r3fYUXDIZUw6e6UQ-jvLqiGOMGsG4Kk49s-9g3YF1tAlB67xtBspnQNot"),
-    "其他": os.getenv("https://discord.com/api/webhooks/1518158038219882676/YSnj584vo1LtVc9LcyQNlkr3XzSZAYPDEVvm7ArBidfoHRIcLQYPdyZ7d7NkkNnPFt4x"),
+    "圖片儲存": os.getenv("DISCORD_IMAGE"),
+    "連結總匯": os.getenv("DISCORD_LINK"),
+    "程式碼": os.getenv("DISCORD_CODE"),
+    "影音": os.getenv("DISCORD_MEDIA"),
+    "學習筆記": os.getenv("DISCORD_NOTE"),
+    "其他": os.getenv("DISCORD_OTHER"),
 }
 
 
