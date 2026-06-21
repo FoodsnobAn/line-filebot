@@ -1,5 +1,9 @@
 import os
+import requests
+from datetime import datetime
+
 from flask import Flask, request
+
 from linebot import LineBotApi, WebhookHandler
 from linebot.models import (
     MessageEvent,
@@ -7,10 +11,8 @@ from linebot.models import (
     TextSendMessage,
     FileMessage,
     ImageMessage,
+    VideoMessage
 )
-import os
-import requests
-from datetime import datetime
 
 app = Flask(__name__)
 
@@ -58,6 +60,38 @@ def get_folder(file_name):
     else:
         return "其他"
 
+@handler.add(MessageEvent, message=VideoMessage)
+def handle_video(event):
+
+    message_id = event.message.id
+
+    folder = "影音"
+    os.makedirs(folder, exist_ok=True)
+
+    file_name = datetime.now().strftime("video_%Y%m%d_%H%M%S.mp4")
+    save_path = os.path.join(folder, file_name)
+
+    content = line_bot_api.get_message_content(message_id)
+
+    with open(save_path, "wb") as f:
+        for chunk in content.iter_content():
+            f.write(chunk)
+
+    discord_ok = upload_to_discord(
+        save_path,
+        file_name,
+        folder
+    )
+
+    if discord_ok:
+        reply = "已儲存影片並上傳到 Discord【影音】"
+    else:
+        reply = "影片已儲存，但 Discord 上傳失敗"
+
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply)
+    )
 
 def upload_to_discord(file_path, file_name, folder):
     webhook_url = DISCORD_WEBHOOKS.get(folder)
